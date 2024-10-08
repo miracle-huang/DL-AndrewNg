@@ -103,6 +103,7 @@ def load_data():
 
 def initialize_parameters(n_x, n_h, n_y):
     """
+    初始化一个两层神经网络的参数，随后在神经网络训练过程中更新这些参数。
     Argument:
     n_x -- size of the input layer
     n_h -- size of the hidden layer
@@ -111,9 +112,15 @@ def initialize_parameters(n_x, n_h, n_y):
     Returns:
     parameters -- python dictionary containing your parameters:
                     W1 -- weight matrix of shape (n_h, n_x)
+                    输入层到隐藏层的权重矩阵，使用正态分布的随机数初始化，并乘以 0.01 将数值缩小（这是为了防止权重初始化过大导致梯度爆炸）。
+                    矩阵的形状为 (n_h, n_x)，表示隐藏层有 n_h 个神经元，输入层有 n_x 个神经元。
                     b1 -- bias vector of shape (n_h, 1)
+                    隐藏层的偏置向量，初始化为全零的向量，形状为 (n_h, 1)，每个隐藏层神经元有一个偏置。
                     W2 -- weight matrix of shape (n_y, n_h)
+                    隐藏层到输出层的权重矩阵，使用正态分布的随机数初始化，
+                    并乘以 0.01 缩小数值。矩阵的形状为 (n_y, n_h)，表示输出层有 n_y 个神经元，隐藏层有 n_h 个神经元。
                     b2 -- bias vector of shape (n_y, 1)
+                    输出层的偏置向量，初始化为全零的向量，形状为 (n_y, 1)，每个输出层神经元有一个偏置。
     """
     
     np.random.seed(1)
@@ -343,6 +350,7 @@ def L_model_backward(AL, Y, caches):
     Y = Y.reshape(AL.shape) # after this line, Y is the same shape as AL
     
     # Initializing the backpropagation
+    # 初始化反向传播：计算损失函数对 AL 的导数 dAL
     dAL = - (np.divide(Y, AL) - np.divide(1 - Y, 1 - AL))
     
     # Lth layer (SIGMOID -> LINEAR) gradients. Inputs: "AL, Y, caches". Outputs: "grads["dAL"], grads["dWL"], grads["dbL"]
